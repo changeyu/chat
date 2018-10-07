@@ -24,8 +24,8 @@ app.get('/talks',(req,res)=>{
 	})
 })
 
-server.listen(8080,function(){
-	console.log('Node app start at port 8080')
+server.listen(80,function(){
+	console.log('Node app start at port 80')
 })
 
 

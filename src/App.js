@@ -9,8 +9,8 @@ import {
 } from './model'
 
 import io from 'socket.io-client'
-const socket = io('ws://localhost:8080')
-// const socket = io('ws://localhost')
+// const socket = io('ws://localhost:8080')
+const socket = io('ws://localhost')
 
 
 class App extends Component {
