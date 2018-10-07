@@ -2,7 +2,7 @@
 html,body{height: 100%;}
 body{background: #335b77;color: #494949;font-family: Arial,"Microsoft YaHei"}
 :focus{outline: none;}
-#root{height:100%;width:100%;position: relative;border:50px solid transparent;}
+#root{height:100%;width:100%;position: relative;border:50px solid transparent;max-width: 1100px;margin:0 auto}
 
 .talk-bar{background: #25292e;color: #afafaf;width: 150px;position: absolute;top: 0;left: 0;height: 100%;}
 .talk-bar li{padding:10px;cursor: pointer;}
