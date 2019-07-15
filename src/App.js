@@ -9,7 +9,8 @@ import {
 } from './model'
 
 import io from 'socket.io-client'
-// const socket = io('ws://localhost:8080')
+// 开发使用
+// const socket = io('ws://localhost:3001')
 const socket = io('ws://')
 
 
@@ -17,11 +18,13 @@ class App extends Component {
   constructor(props){
     super(props)
     this.state={
+      // 所有对话消息
       talkList:[],
       userInfo:{
         name:'',
         avatar:'',
       },
+      // tab列表
       talks:[],
       selectTalkIndex:0,
     }
@@ -30,6 +33,7 @@ class App extends Component {
     }
     this.talkMainEvent = {
       send:this.talkMainEvent.send.bind(this),
+      clear:this.talkMainEvent.clear.bind(this),
     }
     this.userEvent = {
       setUser:this.userEvent.setUser.bind(this),
@@ -59,6 +63,13 @@ class App extends Component {
         name:this.state.userInfo.name,
       })
     },
+    clear(){
+      localStorage.removeItem('charHistory')
+      this.setState({
+        ...this.state,
+        talkList:[]
+      })
+    },
   }
 
   componentDidMount(){
@@ -70,6 +81,7 @@ class App extends Component {
     if(userInfo){
       this.setState({userInfo})
     }
+    // fetch('http://localhost:3001/talks')
     fetch('/talks')
       .then((res)=>{
         return res.json()

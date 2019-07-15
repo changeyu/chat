@@ -40,6 +40,9 @@ body{background: #335b77;color: #494949;font-family: Arial,"Microsoft YaHei"}
 .talk-input .talk-smile li{width: 35px;height: 35px;cursor: pointer;display: inline-flex;align-items: center;justify-content: center;}
 .talk-input .talk-smile li:hover{background: #eee;}
 
+.clear{cursor: pointer;color: #f00;font-size: 12px;}
+.clear:hover{text-decoration: underline;}
+
 
 @media screen and (max-width: 750px) {
   #root{border:none;}

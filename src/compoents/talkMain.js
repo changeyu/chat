@@ -65,6 +65,11 @@ export default class extends Component {
       smileShow:false
     })
   }
+  onClear=()=>{
+    if(window.confirm('确定此操作，清空后不可恢复!')){
+      this.props.clear()
+    }
+  }
   render(){
     if(this.props.talks.length==0){
       return null
@@ -77,6 +82,11 @@ export default class extends Component {
             -
             {this.props.talks.length>0?this.props.talks[this.props.selectTalkIndex].digest:''}
           </div>
+          {
+            this.props.talkList.length>0?
+            <div className="clear" onClick={this.onClear}>清空所有记录</div>
+            :null
+          }
           <div className="user">
             {this.props.userInfo.name}
             {

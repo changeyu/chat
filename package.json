@@ -58,6 +58,7 @@
     "build": "node scripts/build.js",
     "test": "node scripts/test.js --env=jsdom",
     "server": "nodemon server/server.js",
+    "dev-server": "PORT=3001 node server/server.js",
     "begin": "node server/server.js"
   },
   "jest": {
