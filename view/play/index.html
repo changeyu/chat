@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+  <style>
+    *{margin: 0;padding: 0;}
+    html,body{height:100%;width:100%;overflow: hidden;}
+    iframe{width:100%;height:100%;}
+  </style>
+</head>
+<body>
+  <iframe id="iframe" src="http://vip.wandhi.com/?v=" frameborder="0"></iframe>
+  <script>
+    let video_url = localStorage.getItem('video_url')
+    let media_url = localStorage.getItem('media_url')
+    if(video_url && media_url){
+      document.querySelector('iframe').src = `${media_url}${encodeURI(video_url)}`
+    }
+  </script>
+</body>
+</html>

@@ -12,8 +12,10 @@
   </style>
 </head>
 <body>
-  <iframe id="iframe" src="http://vip.wandhi.com/?v=" frameborder="0"></iframe>
+  <div><select name="" id="eleSelect"></select></div>
+  <div><input type="text" id="eleInput" placeholder="视频地址"><button id="elePlay">播放</button></div>
   <script>
+    
     const jks = [
       { url: "http://www.85105052.com/admin.php?url=", title: "综合线路⑨" },
       { url: "https://yun.odflv.com/?url=", title: "综合线路⑪(不太稳定)" },
@@ -67,13 +69,27 @@
       { url: "http://api.sigujx.com/?url=", title: "玩的嗨——2-若接口失效可反馈！QQ群:340569308" },
       { url: "http://vip.wandhi.com/?v=", title: "玩的嗨——1-若接口失效可反馈！QQ群:340569308" },
     ];
-    let url = location.search.replace('?url=','')
-    let select_id = localStorage.getItem('select_id')
-    let media_url = jks[jks.length-2].url
-    if(select_id){
-      media_url = jks[select_id].url
+    let media_url = localStorage.getItem('media_url')
+    jks.forEach(({url,title})=>{
+      let el = document.createElement('option')
+      el.value = url
+      el.innerText = title
+      eleSelect.appendChild(el)
+      if(media_url == url){
+        el.selected = true
+      }
+    })
+    eleSelect.onchange=function(){
+      media_url = this.value
+      localStorage.setItem('media_url',media_url)
     }
-    document.querySelector('iframe').src = `${media_url}${encodeURI(url)}`
+    elePlay.onclick=function(){
+      let video_url = eleInput.value
+      localStorage.setItem('video_url',video_url)
+      setTimeout(() => {
+        window.open('/media/play')
+      }, 50);
+    }
   </script>
 </body>
 </html>
