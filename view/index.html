@@ -9,13 +9,30 @@
     *{margin: 0;padding: 0;}
     html,body{height:100%;width:100%;overflow: hidden;}
     iframe{width:100%;height:100%;}
+    li{list-style: none;white-space: nowrap;width: 50%;overflow: hidden;text-overflow: ellipsis;position: relative;padding-right: 20px}
+    .url{cursor: pointer;font-size: 12px;color: blue}
+    .del{position: absolute;right: 0;top: 0;}
   </style>
 </head>
 <body>
   <div><select name="" id="eleSelect"></select></div>
   <div><input type="text" id="eleInput" placeholder="视频地址"><button id="elePlay">播放</button></div>
+  <ul id="history_list"></ul>
   <script>
-    
+    var orignalSetItem = localStorage.setItem
+    localStorage.setItem = function(key,newValue){
+      var setItemEvent = new Event("setItemEvent")
+      setItemEvent.key = key
+      setItemEvent.newValue = newValue
+      window.dispatchEvent(setItemEvent)
+      orignalSetItem.apply(this,arguments)
+    }
+    function rederMedia_history(){
+      history_list.innerHTML = ''
+      JSON.parse(localStorage.getItem('media_history') || '[]').forEach(url=>{
+        history_list.innerHTML+=`<li><span class="url">${url}</span> <button title="${url}" class="del">del</button></li>`
+      })
+    }
     const jks = [
       { url: "http://www.85105052.com/admin.php?url=", title: "综合线路⑨" },
       { url: "https://yun.odflv.com/?url=", title: "综合线路⑪(不太稳定)" },
@@ -88,7 +105,34 @@
       localStorage.setItem('video_url',video_url)
       setTimeout(() => {
         window.open('/media/play')
-      }, 50);
+      }, 50)
+      let media_history = JSON.parse(localStorage.getItem('media_history') || '[]')
+      media_history.push(video_url)
+      localStorage.setItem('media_history',JSON.stringify(Array.from(new Set(media_history))))
+    }
+    rederMedia_history()
+    
+    window.addEventListener("setItemEvent", function (e) {
+      if(e.key == 'media_history'){
+        setTimeout(rederMedia_history,50)
+      }
+    })
+    history_list.onclick=function(e){
+      console.log(e.target.tagName)
+      if(e.target.className == 'del'){
+        let url = e.target.getAttribute('title')
+        console.log(url)
+        let media_history = JSON.parse(localStorage.getItem('media_history') || '[]')
+        media_history = media_history.reduce((pre,cur)=>{
+          if(cur!=url){pre.push(cur)}
+          return pre
+        },[])
+        localStorage.setItem('media_history',JSON.stringify(Array.from(new Set(media_history))))
+      }
+      if(e.target.className == 'url'){
+        eleInput.value = e.target.innerText
+        elePlay.click()
+      }
     }
   </script>
 </body>
