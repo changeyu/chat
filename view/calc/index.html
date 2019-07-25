@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>calc</title>
+  <style>
+    *{margin: 0;padding: 0;list-style: none}
+    html,body{height:100%;width:100%;overflow: hidden;}
+    body{margin: 0 auto;width:50%;}
+  </style>
+</head>
+<body>
+    <h4>支持加法操作</h4>
+    <ul id="ul">
+        <li><input class="single" type="text"><button class="del">del</button></li>
+    </ul>
+    <button id="add">add</button>
+    <div><input id="allPay" type="text" placeholder="总价"></div>
+    <button id="calc">calc</button>
+    <div id="result"></div>
+</body>
+<script>
+add.onclick=function(){
+    let el = document.createElement('li')
+    el.innerHTML= '<input class="single" type="text"><button class="del">del</button>'
+    ul.appendChild(el)
+}
+calc.onclick=function(){
+    let allPayNum = parseInt(allPay.value)
+    let everyArr = []
+    let everyPayAll = 0
+    document.querySelectorAll('.single').forEach(function(ele){
+        let num = ele.value.split('+').reduce((pre,cur)=>{
+            pre+=parseInt(cur)
+            return pre
+        },0)
+        everyPayAll+=num
+        everyArr.push(num)
+    })
+    result.innerHTML = ''
+    everyArr.forEach(function(val){
+        result.innerHTML+=`<p>${allPayNum*val/everyPayAll}</p>`
+    })
+}
+ul.onclick=function(e){
+    // console.log(e.target.className)
+    if(e.target.className=='del'){
+        e.target.parentNode.remove()
+    }
+}
+</script>
+</html>

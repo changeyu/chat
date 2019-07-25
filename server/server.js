@@ -20,7 +20,7 @@ io.on('connection',(socket)=>{
 app.use(allowCrossDomain)
 
 app.use('/', express.static('./build'))
-app.use('/media', express.static('./view'))
+app.use('/', express.static('./view'))
 
 app.get('/talks',(req,res)=>{
 	return res.json({
